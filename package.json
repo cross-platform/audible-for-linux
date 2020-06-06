@@ -1,14 +1,37 @@
 {
   "name": "audible-for-linux",
+  "author": "Marcus Tomlinson",
   "version": "0.1.0",
   "description": "Audible for Linux",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --linux snap"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "build": {
+    "appId": "audible-for-linux",
+    "productName": "Audible for Linux",
+    "linux": {
+      "icon": "audible-for-linux.png",
+      "category": "Audio"
+    },
+    "snap": {
+      "grade": "stable",
+      "confinement": "strict",
+      "plugs": [
+        "audio-playback",
+        "desktop",
+        "desktop-legacy",
+        "browser-support",
+        "network",
+        "x11"
+      ]
+    }
+  },
+  "repository": "https://github.com/cross-platform/audible-for-linux",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^9.0.2"
+    "electron": "^9.0.2",
+    "electron-builder": "^22.7.0"
   }
 }

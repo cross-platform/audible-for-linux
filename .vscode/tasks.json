@@ -8,7 +8,9 @@
                 "cwd": "${workspaceFolder}",
             },
             "command": ["rm -rf node_modules package-lock.json &&",
-                        "npm install"],
+                        "npm install &&",
+                        "rm -rf dist &&",
+                        "npm run dist"],
             "group": { "kind": "build", "isDefault": true },
             "problemMatcher": {
                 "base": "$gcc", "fileLocation": ["relative", "${workspaceFolder}"]
