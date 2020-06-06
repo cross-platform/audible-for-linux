@@ -10,8 +10,9 @@
   },
   "build": {
     "appId": "audible-for-linux",
-    "productName": "Audible for Linux",
+    "productName": "Audible",
     "linux": {
+      "target": "snap",
       "icon": "audible-for-linux.png",
       "category": "Audio"
     },
@@ -24,6 +25,7 @@
         "desktop-legacy",
         "browser-support",
         "network",
+        "opengl",
         "x11"
       ]
     }
