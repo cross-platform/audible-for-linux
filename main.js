@@ -1,11 +1,13 @@
-const {app, BrowserWindow, Menu} = require('electron')
+const {app, BrowserWindow, Menu, shell} = require('electron')
 
 const appName = 'Audible'
 
 const appUrl = 'https://www.audible.co.uk/library'
+const signInUrl = 'https://www.audible.co.uk/sign-in'
 
-const customCss = '#top-1 {display: none !important;}' +
-'#bottom-1 {display: none !important;}' +
+const customCss =
+'.topSlot {display: none !important;}' +
+'.bottomSlot {display: none !important;}' +
 '.bc-button-secondary {display: none !important;}' +
 '.bc-size-caption1 {display: none !important;}'
 
@@ -20,8 +22,11 @@ function createWindow () {
   mainWindow.loadURL(appUrl)
 
   mainWindow.webContents.on('will-navigate', function(event, url) {
-    if (!url.startsWith(appUrl)) {
+    if (!url.startsWith(appUrl) && !url.startsWith(signInUrl)) {
       event.preventDefault()
+      if (mainWindow.webContents.getURL().includes('signin?')) {
+        shell.openExternal(url)
+      }
     }
   });
 
@@ -36,14 +41,21 @@ function createWindow () {
 
   mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options) => {
     event.preventDefault()
-    const subWindow = new BrowserWindow({
-      title: appName
-    })
-    subWindow.loadURL(url)
-
-    subWindow.webContents.on('page-title-updated', function() {
-      subWindow.setTitle(appName);
-    });
+    if (mainWindow.webContents.getURL().includes('signin?')) {
+      shell.openExternal(url)
+    }
+    else {
+      const subWindow = new BrowserWindow({
+        width: 450,
+        height: 750,
+        title: appName
+      })
+      subWindow.loadURL(url)
+  
+      subWindow.webContents.on('page-title-updated', function() {
+        subWindow.setTitle(appName);
+      });
+    }
   })
 }
 
