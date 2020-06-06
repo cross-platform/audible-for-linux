@@ -3,19 +3,19 @@ const {app, BrowserWindow, Menu, shell} = require('electron')
 const appName = 'Audible'
 
 if (app.getLocaleCountryCode() == 'GB') {
-  appUrl = 'https://www.audible.co.uk/library?ipRedirectOverride=true'
+  appUrl = 'https://www.audible.co.uk/library'
   signInUrl = 'https://www.audible.co.uk/sign-in'
 }
 else if (app.getLocaleCountryCode() == 'FR') {
-  appUrl = 'https://www.audible.fr/library?ipRedirectOverride=true'
+  appUrl = 'https://www.audible.fr/library'
   signInUrl = 'https://www.audible.fr/sign-in'
 }
 else if (app.getLocaleCountryCode() == 'DE') {
-  appUrl = 'https://www.audible.de/library?ipRedirectOverride=true'
+  appUrl = 'https://www.audible.de/library'
   signInUrl = 'https://www.audible.de/sign-in'
 }
 else {
-  appUrl = 'https://www.audible.com/library?ipRedirectOverride=true'
+  appUrl = 'https://www.audible.com/library'
   signInUrl = 'https://www.audible.com/sign-in'
 }
 
@@ -33,7 +33,7 @@ function createWindow () {
     height: 655,
     title: appName
   })
-  mainWindow.loadURL(appUrl)
+  mainWindow.loadURL(appUrl + '?ipRedirectOverride=true')
 
   mainWindow.webContents.on('will-navigate', function(event, url) {
     if (!url.startsWith(appUrl) && !url.startsWith(signInUrl)) {
