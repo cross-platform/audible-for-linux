@@ -2,8 +2,22 @@ const {app, BrowserWindow, Menu, shell} = require('electron')
 
 const appName = 'Audible'
 
-const appUrl = 'https://www.audible.co.uk/library'
-const signInUrl = 'https://www.audible.co.uk/sign-in'
+if (app.getLocaleCountryCode() == 'GB') {
+  appUrl = 'https://www.audible.co.uk/library?ipRedirectOverride=true'
+  signInUrl = 'https://www.audible.co.uk/sign-in'
+}
+else if (app.getLocaleCountryCode() == 'FR') {
+  appUrl = 'https://www.audible.fr/library?ipRedirectOverride=true'
+  signInUrl = 'https://www.audible.fr/sign-in'
+}
+else if (app.getLocaleCountryCode() == 'DE') {
+  appUrl = 'https://www.audible.de/library?ipRedirectOverride=true'
+  signInUrl = 'https://www.audible.de/sign-in'
+}
+else {
+  appUrl = 'https://www.audible.com/library?ipRedirectOverride=true'
+  signInUrl = 'https://www.audible.com/sign-in'
+}
 
 const customCss =
 '.topSlot {display: none !important;}' +
