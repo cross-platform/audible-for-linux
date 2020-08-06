@@ -1,7 +1,7 @@
 {
   "name": "audible-for-linux",
   "author": "Marcus Tomlinson",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Audible for Linux",
   "main": "main.js",
   "scripts": {
@@ -27,7 +27,10 @@
         "network",
         "opengl",
         "x11"
-      ]
+      ],
+      "desktop": {
+        "StartupWMClass": "audible-for-linux"
+      }
     }
   },
   "repository": "https://github.com/cross-platform/audible-for-linux",
