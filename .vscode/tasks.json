@@ -36,7 +36,7 @@
             },
             "command": ["rm -rf ~/snap/audible-for-linux &&",
                         "snap remove audible-for-linux &&",
-                        "snap install dist/audible-for-linux_0.2.0_amd64.snap --dangerous &&",
+                        "snap install dist/audible-for-linux_0.3.0_amd64.snap --dangerous &&",
                         "audible-for-linux"],
             "group": { "kind": "build", "isDefault": true },
             "problemMatcher": {

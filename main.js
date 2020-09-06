@@ -1,38 +1,50 @@
-const {app, BrowserWindow, Menu, shell} = require('electron')
+const { app, BrowserWindow, Menu, shell } = require('electron')
+const fs = require('fs');
 
 const appName = 'Audible'
 
+if (process.env.SNAP_USER_COMMON) {
+  const localeFile = process.env.SNAP_USER_COMMON + '/locale';
+  if (!fs.existsSync(localeFile)) {
+    fs.writeFileSync(localeFile, app.getLocaleCountryCode());
+  }
+  locale = fs.readFileSync(localeFile).toString().substring(0, 2).toUpperCase();
+}
+else {
+  locale = app.getLocaleCountryCode();
+}
+
 // https://audible.custhelp.com/app/answers/detail/a_id/7267/~/what-is-an-audible-marketplace-and-which-is-best-for-me%3F
 
-if (app.getLocaleCountryCode() == 'CA') {
+if (locale == 'CA') {
   appUrl = 'https://www.audible.ca/library'
   signInUrl = 'https://www.audible.ca/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'GB' || app.getLocaleCountryCode() == 'IE') {
+else if (locale == 'GB' || locale == 'IE') {
   appUrl = 'https://www.audible.co.uk/library'
   signInUrl = 'https://www.audible.co.uk/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'AU' || app.getLocaleCountryCode() == 'NZ') {
+else if (locale == 'AU' || locale == 'NZ') {
   appUrl = 'https://www.audible.com.au/library'
   signInUrl = 'https://www.audible.com.au/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'FR') {
+else if (locale == 'FR') {
   appUrl = 'https://www.audible.fr/library'
   signInUrl = 'https://www.audible.fr/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'DE') {
+else if (locale == 'DE') {
   appUrl = 'https://www.audible.de/library'
   signInUrl = 'https://www.audible.de/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'JP') {
+else if (locale == 'JP') {
   appUrl = 'https://www.audible.co.jp/library'
   signInUrl = 'https://www.audible.co.jp/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'IT') {
+else if (locale == 'IT') {
   appUrl = 'https://www.audible.it/library'
   signInUrl = 'https://www.audible.it/sign-in'
 }
-else if (app.getLocaleCountryCode() == 'IN') {
+else if (locale == 'IN') {
   appUrl = 'https://www.audible.in/library'
   signInUrl = 'https://www.audible.in/sign-in'
 }
@@ -42,12 +54,12 @@ else {
 }
 
 const customCss =
-'.topSlot {display: none !important;}' +
-'.bottomSlot {display: none !important;}' +
-'.bc-button-secondary {display: none !important;}' +
-'.bc-size-caption1 {display: none !important;}'
+  '.topSlot {display: none !important;}' +
+  '.bottomSlot {display: none !important;}' +
+  '.bc-button-secondary {display: none !important;}' +
+  '.bc-size-caption1 {display: none !important;}'
 
-function createWindow () {
+function createWindow() {
   Menu.setApplicationMenu(null)
 
   const mainWindow = new BrowserWindow({
@@ -57,20 +69,18 @@ function createWindow () {
   })
   mainWindow.loadURL(appUrl + '?ipRedirectOverride=true')
 
-  mainWindow.webContents.on('will-navigate', function(event, url) {
-    if (!url.startsWith(appUrl) && !url.startsWith(signInUrl)) {
+  mainWindow.webContents.on('will-navigate', function (event, url) {
+    if (!url.startsWith(appUrl) && !url.startsWith(signInUrl) && !url.includes('/ap/signin')) {
       event.preventDefault()
-      if (mainWindow.webContents.getURL().includes('signin?')) {
-        shell.openExternal(url)
-      }
+      shell.openExternal(url)
     }
   });
 
-  mainWindow.webContents.on('did-navigate', function() {
+  mainWindow.webContents.on('did-navigate', function () {
     mainWindow.webContents.insertCSS(customCss)
   });
 
-  mainWindow.webContents.on('page-title-updated', function() {
+  mainWindow.webContents.on('page-title-updated', function () {
     mainWindow.webContents.insertCSS(customCss)
     mainWindow.setTitle(appName);
   });
@@ -87,8 +97,8 @@ function createWindow () {
         title: appName
       })
       subWindow.loadURL(url)
-  
-      subWindow.webContents.on('page-title-updated', function() {
+
+      subWindow.webContents.on('page-title-updated', function () {
         subWindow.setTitle(appName);
       });
     }

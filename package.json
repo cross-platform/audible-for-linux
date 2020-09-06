@@ -1,7 +1,7 @@
 {
   "name": "audible-for-linux",
   "author": "Marcus Tomlinson",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Audible for Linux",
   "main": "main.js",
   "scripts": {
