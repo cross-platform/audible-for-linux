@@ -9,6 +9,9 @@
     "dist": "electron-builder --linux snap"
   },
   "build": {
+    "electronDownload": {
+      "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
+    },
     "appId": "audible-for-linux",
     "productName": "Audible",
     "linux": {
@@ -37,7 +40,7 @@
   "repository": "https://github.com/cross-platform/audible-for-linux",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "https://github.com/castlabs/electron-releases#v6.0.0-wvvmp",
+    "electron": "https://github.com/castlabs/electron-releases#v13.0.1-wvvmp",
     "electron-builder": "^22.7.0"
   }
 }
