@@ -105,7 +105,7 @@ function createWindow() {
   })
 }
 
-app.whenReady().then(() => {
+app.on('widevine-ready', () => {
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
